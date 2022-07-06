@@ -8,36 +8,72 @@ const { API_KEY } = process.env;
 
 const router = Router();
 
-//GET ALL RECIPES FOR DB
+//GET ALL RECIPES 
 const getRecipesApi = async ()=> {
     try {
-                const getRecipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
-                console.log("SOY GETRECIPES Y TE TRAIGO", getRecipes.data)
-                const saveDb = getRecipes.data.results.map((r) =>{
-                    return {
-                        name: r.title? r.title : "Undefined Name",
-                        id: r.id,
-                        summary: r.summary? r.summary : "Undefined Summary",
-                        healtScore: r.healtScore? r.healtScore : "Undefined Healt Score",
-                        steps: r.analyzedInstructions.steps? r.analyzedInstructions.steps : "Undefined steps",
-                        image: r.image? r.image : "Undefined Image",
-                        diets: r.diets? r.diets : "Undefined diets"
-                    }
-                })
-                console.log("SOY SAVEDB Y TRAIGO", saveDb )
-
-                return saveDb;
+        const getRecipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=2`);
+        const getApi = getRecipes.data.results.map((r) =>(
+            {
+                name: r.title,
+                id: r.id,
+                summary: r.summary,
+                healthScore: r.healthScore,
+                steps: r.analyzedInstructions[0]?.steps.map((each)=>{
+                    return each.step
+                }),
+                image: r.image,
+                diets: r.diets
+            }
+        ))
+        //console.log("SOY RETURN API", getApi)
+        return getApi;
     } catch (error) {
-        console.log("Error en recipeControllers", error)
+        console.log("Error in recipeControllers", error)
+    }
+}
+
+const getRecipesDb = async () =>{
+    try {
+        const db = await Recipe.findAll({
+            include: {
+                model: Diet,
+                attributtes: ["name"],
+                through: {
+                    attributtes: [],
+                }
+            }
+        }) 
+        const findRecipe = db?.map((r)=>{
+            return{
+                id,
+                name,
+                summary,
+                healtScore,
+                steps,
+                image
+            }
+        })
+        return findRecipe;
+    } catch (error) {
+        console.log("Error in recipeControllers", error)
+    }
+}
+
+
+const getAllRecipes = async ()=> {
+    try {
+        const getAllApi = await getRecipesApi();
+        const getAllDb = await getRecipesDb();
+        const AllRecipes = getAllApi.concat(getAllDb);
+        return AllRecipes;
+    } catch (error) {
+        console.log("Error in recipeControllers", error)
     }
 }
 
 
 
 
-
-
-
 module.exports = {
-    getRecipesApi
+    getAllRecipes,
 }
