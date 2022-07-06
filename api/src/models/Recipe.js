@@ -8,5 +8,33 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4
+    },
+    summary: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    healtScore: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      validate: {
+        max: 100,
+        min: 0
+      }
+    },
+    steps: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true
+      }
+    }
   });
 };
