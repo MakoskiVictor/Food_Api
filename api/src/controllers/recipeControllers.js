@@ -16,7 +16,7 @@ const getRecipesApi = async ()=> {
             {
                 name: r.title,
                 id: r.id,
-                summary: r.summary,
+                summary: r.summary.replace(/<[^>]+>/g, ''),
                 healthScore: r.healthScore,
                 steps: r.analyzedInstructions[0]?.steps.map((each)=>{
                     return each.step
@@ -25,7 +25,6 @@ const getRecipesApi = async ()=> {
                 diets: r.diets
             }
         ))
-        //console.log("SOY RETURN API", getApi)
         return getApi;
     } catch (error) {
         console.log("Error in recipeControllers", error)
@@ -75,14 +74,13 @@ const getAllRecipes = async ()=> {
 const getRecipeId = async (id) =>{
     try {
         const json = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=2`);
-        console.log("SOY JSON", json)
         const recipeId = await json.data.results.filter(r => r.id == id);
 
         const response = recipeId.map((r) =>(
             {
                 name: r.title,
                 id: r.id,
-                summary: r.summary,
+                summary: r.summary.replace(/<[^>]+>/g, ''),
                 healthScore: r.healthScore,
                 steps: r.analyzedInstructions[0]?.steps.map((each)=>{
                     return each.step
@@ -92,7 +90,6 @@ const getRecipeId = async (id) =>{
             }
         ))
 
-        console.log("SOY RECIPE CONTROLLERS", response)
         return response;
     } catch (error) {
         console.log("Error in recipeControllers per id", error)
@@ -100,7 +97,6 @@ const getRecipeId = async (id) =>{
 };
 
 const postRecipe = async (name, summary, healthScore, steps, image, diets)=>{
-    console.log("SOY LO QUE TRAE EL BODY", name, summary, healthScore, steps, image, diets)
     try {
         const recipeCreated = await Recipe.create({
             name,
