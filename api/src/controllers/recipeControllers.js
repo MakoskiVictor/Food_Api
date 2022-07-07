@@ -53,6 +53,7 @@ const getRecipesDb = async () =>{
                 image
             }
         })
+        //console.log("SOY findRecipe", findRecipe)
         return findRecipe;
     } catch (error) {
         console.log("Error in recipeControllers", error)
@@ -71,9 +72,32 @@ const getAllRecipes = async ()=> {
     }
 }
 
+const postRecipe = async (name, summary, healthScore, steps, image, diets)=>{
+    console.log("SOY LO QUE TRAE EL BODY", name, summary, healthScore, steps, image, diets)
+    try {
+        const recipeCreated = await Recipe.create({
+            name,
+            summary,
+            healthScore,
+            steps,
+            image
+        })
+    
+        const dietsDb = await Diet.findAll({
+            where: {name: diets}
+        })
+        recipeCreated.addDiets(dietsDb);
+        return recipeCreated;
+    } catch (error) {
+        console.log("Error in recipe controllers", error);
+    }
+
+}
+
 
 
 
 module.exports = {
-    getAllRecipes,
+    getAllRecipes, 
+    postRecipe
 }
