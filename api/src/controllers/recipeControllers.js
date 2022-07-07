@@ -30,7 +30,7 @@ const getRecipesApi = async ()=> {
     } catch (error) {
         console.log("Error in recipeControllers", error)
     }
-}
+};
 
 const getRecipesDb = async () =>{
     try {
@@ -58,7 +58,7 @@ const getRecipesDb = async () =>{
     } catch (error) {
         console.log("Error in recipeControllers", error)
     }
-}
+};
 
 
 const getAllRecipes = async ()=> {
@@ -68,9 +68,36 @@ const getAllRecipes = async ()=> {
         const AllRecipes = getAllApi.concat(getAllDb);
         return AllRecipes;
     } catch (error) {
-        console.log("Error in recipeControllers", error)
+        console.log("Error in recipeControllers get recipe", error)
     }
-}
+};
+
+const getRecipeId = async (id) =>{
+    try {
+        const json = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=2`);
+        console.log("SOY JSON", json)
+        const recipeId = await json.data.results.filter(r => r.id == id);
+
+        const response = recipeId.map((r) =>(
+            {
+                name: r.title,
+                id: r.id,
+                summary: r.summary,
+                healthScore: r.healthScore,
+                steps: r.analyzedInstructions[0]?.steps.map((each)=>{
+                    return each.step
+                }),
+                image: r.image,
+                diets: r.diets
+            }
+        ))
+
+        console.log("SOY RECIPE CONTROLLERS", response)
+        return response;
+    } catch (error) {
+        console.log("Error in recipeControllers per id", error)
+    }
+};
 
 const postRecipe = async (name, summary, healthScore, steps, image, diets)=>{
     console.log("SOY LO QUE TRAE EL BODY", name, summary, healthScore, steps, image, diets)
@@ -89,15 +116,16 @@ const postRecipe = async (name, summary, healthScore, steps, image, diets)=>{
         recipeCreated.addDiets(dietsDb);
         return recipeCreated;
     } catch (error) {
-        console.log("Error in recipe controllers", error);
+        console.log("Error in recipe controllers post", error);
     }
+};
 
-}
 
 
 
 
 module.exports = {
     getAllRecipes, 
-    postRecipe
+    postRecipe,
+    getRecipeId
 }
