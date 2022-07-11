@@ -8,7 +8,7 @@ export const POST_RECIPE = "POST_RECIPE";
 export function fetchAllRecipes () {
     return function(dispatch) {
         fetch(`http://localhost:3001/api/recipes`)
-        .then(response => response.json)
+        .then(response => response.json())
         .then((recipes)=>{
             dispatch({
                 type: FETCH_ALL_RECIPES,
@@ -24,7 +24,7 @@ export function fetchAllRecipes () {
 export function fetchRecipeName(name) {
     return function(dispatch){
         fetch(`http://localhost:3001/api/recipes?name=${name}`)
-        .then(response => response.json)
+        .then(response => response.json())
         .then((recipe) => {
             dispatch({
                 type: FETCH_RECIPE_NAME,
@@ -40,7 +40,7 @@ export function fetchRecipeName(name) {
 export function fetchRecipeId(id) {
     return function(dispatch) {
         fetch(`http://localhost:3001/api/recipes/${id}`)
-        .then(response => response.json)
+        .then(response => response.json())
         .then((recipe) =>{
             dispatch({
                 type: FETCH_RECIPE_ID,
@@ -59,7 +59,7 @@ export function postRecipe(data) {
             method: "POST",
             body: JSON.stringify(data),
         })
-        .then(response => response.json)
+        .then(response => response.json())
         .then((response)=>{
             dispatch({
                 type: POST_RECIPE,
