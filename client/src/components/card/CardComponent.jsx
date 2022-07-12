@@ -2,7 +2,6 @@ import React from "react";
 import { legacy_createStore } from "redux";
 
 export default function CardComponent ({name, summary, healthScore, steps, image, diets, id}) {
-    console.log("SOY CARD COMPONENT", name, id, image, diets)
     return(
         <div>
             <h3>Name: {name}</h3>
