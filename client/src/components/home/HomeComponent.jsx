@@ -10,6 +10,8 @@ export default function HomeComponent() {
 
     const allRecipes = useSelector((state)=> state.allRecipes); //TRAE EL ESTADO DEL REDUCER
     const dispatch = useDispatch();
+    //UN ORDEN PARA LOS FILTROS
+    const [order, setOrder] = useState("");
     //PARA PAGINADO, SETEAMOS VARIOS ESTADOS LOCALES
     //UN ESTADO CON LA PAG ACTUAL Y OTRO QUE SETEE LA PAG ACTUAL
     const [currentPage, setCurrentPage] = useState(1); //INICIA EN LA PAG 1
@@ -30,7 +32,7 @@ export default function HomeComponent() {
     return(
         <div>
             <h2>HOME</h2>
-            <FiltersComponent state={allRecipes}/>
+            <FiltersComponent state={allRecipes} setOrder={setOrder} setCurrentPage={setCurrentPage} />
             {
                 currentRecipes?.map( (r) => {
                     return( 
@@ -39,6 +41,7 @@ export default function HomeComponent() {
                         name={r.name}
                         image= {r.image}
                         diets= {r.diets}
+                        healthScore= {r.healthScore}
                         />
                 )})
             }
