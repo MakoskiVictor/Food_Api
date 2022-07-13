@@ -5,6 +5,8 @@ export const FETCH_RECIPE_NAME = "FETCH_RECIPE_NAME";
 export const FETCH_RECIPE_ID = "FETCH_RECIPE_ID";
 export const POST_RECIPE = "POST_RECIPE";
 export const FILTER_BY_DIET = "FILTER_BY_DIET";
+export const ORDER_BY_NAME = "ORDER_BY_NAME";
+export const ORDER_BY_SCORE = "ORDER_BY_SCORE";
 
 export function fetchAllRecipes () {
     return function(dispatch) {
@@ -74,9 +76,22 @@ export function postRecipe(data) {
 };
 
 export function filterByDiet(payload){
-    console.log("SOY ACTIONS.PAYLOAD", payload)
     return{
         type: FILTER_BY_DIET,
         payload
     }
-}
+};
+
+export function orderByName(payload) {
+    return {
+        type: ORDER_BY_NAME,
+        payload
+    }
+};
+
+export function orderByScore(payload) {
+    return {
+        type: ORDER_BY_SCORE,
+        payload
+    }
+};
