@@ -1,22 +1,39 @@
 import React from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { filterByDiet } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import { filterByDiet, orderByName, orderByScore } from "../../redux/actions";
 
-export default function FiltersComponent () {
-/*     const allRecipes = useSelector(state => state.allRecipes)
-    const [filter, setFilter] = useState([]) */
+export default function FiltersComponent ({setCurrentPage, setOrder}) {
+
     const dispatch = useDispatch();
+
     function handleFilterByDiets (e) {
+        e.preventDefault();
         dispatch(filterByDiet(e.target.value));
         console.log(e.target.value)
+    };
+
+    function handleOrderByName(e) {
+        e.preventDefault();
+        dispatch(orderByName(e.target.value))
+        console.log("SOY ORDERBY", e.target.value)
+        setCurrentPage(1); //PARA QUE CUANDO ORDENE, ME SETEE LA PAG EN LA PRIMERA
+        setOrder(`OrderBy ${e.target.value}`) //SOLO LO MODIFICO PARA QUE ME RENDERICE EL COMPONENTE
+    }
+
+    function handleOrderByScore(e){
+        e.preventDefault();
+        dispatch(orderByScore(e.target.value))
+        console.log("SOY ORDER SCORE", e.target.value)
+        setCurrentPage(1); //PARA QUE CUANDO ORDENE, ME SETEE LA PAG EN LA PRIMERA
+        setOrder(`OrderBy ${e.target.value}`) //SOLO LO MODIFICO PARA QUE ME RENDERICE EL COMPONENTE
     }
 
 
     return(
         <div>
             <div>
-            <select name="select" onChange={e => handleFilterByDiets(e)}>
+            <label htmlFor="filterName" >Filter By Diet:</label>
+            <select onChange={e => handleFilterByDiets(e)}>
                 <option value="All">All</option>
                 <option value="gluten free">Gluten free</option>
                 <option value="dairy free">Dairy free</option>
@@ -31,6 +48,22 @@ export default function FiltersComponent () {
                 <option value="primal">Primal</option>
                 <option value="fodmap friendly">Fodmap friendly</option>
                 <option value="whole 30">Whole 30</option>
+            </select>
+            </div>
+            <div>
+            <label htmlFor="filterName" >Order By Name:</label>
+            <select onChange={e => handleOrderByName(e)}>
+                <option value="none">None</option>
+                <option value="des">A-Z</option>
+                <option value="asc">Z-A</option>
+            </select>
+            </div>
+            <div>
+            <label htmlFor="filterHealth" >Order By Health Score:</label>
+            <select onChange={e => handleOrderByScore(e)}>
+                <option value="none">None</option>
+                <option value="mayor">Mayor Score</option>
+                <option value="minor">Minor Score</option>
             </select>
             </div>
 
