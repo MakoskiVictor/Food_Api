@@ -1,12 +1,13 @@
 //IMPORTAMOS LAS ACTIONS
 import { bindActionCreators } from "redux";
 import { FETCH_ALL_RECIPES, FETCH_RECIPE_NAME, FETCH_RECIPE_ID, 
-    POST_RECIPE, FILTER_BY_DIET, ORDER_BY_NAME, ORDER_BY_SCORE } from "../actions";
+    POST_RECIPE, FILTER_BY_DIET, ORDER_BY_NAME, ORDER_BY_SCORE, FETCH_DIET } from "../actions";
 
 //SETEAMOS EL/LOS ESTADO/S
 const initialState = {
     allRecipes: [],
     copyRecipes: [],
+    diets: []
 };
 
 export default function reducer (state = initialState, action) {
@@ -28,6 +29,12 @@ export default function reducer (state = initialState, action) {
             return {
                 ...state,
                 allRecipes: action.payload
+            }
+
+        case FETCH_DIET:
+            return {
+                ...state,
+                diets: action.payload
             }
 
         case POST_RECIPE:
