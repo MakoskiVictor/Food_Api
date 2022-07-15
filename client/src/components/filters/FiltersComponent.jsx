@@ -32,9 +32,9 @@ export default function FiltersComponent ({setCurrentPage, setOrder}) {
     return(
         <div>
             <div>
-            <label htmlFor="filterName" >Filter By Diet:</label>
+            <label htmlFor="filterName" >Filter By Diet: </label>
             <select onChange={e => handleFilterByDiets(e)}>
-                <option value="All">All</option>
+                <option value="All" autoFocus >All</option>
                 <option value="gluten free">Gluten free</option>
                 <option value="dairy free">Dairy free</option>
                 <option value="ketogenic">Ketogenic</option>
@@ -51,17 +51,17 @@ export default function FiltersComponent ({setCurrentPage, setOrder}) {
             </select>
             </div>
             <div>
-            <label htmlFor="filterName" >Order By Name:</label>
+            <label htmlFor="filterName" >Order By Name: </label>
             <select onChange={e => handleOrderByName(e)}>
-                <option value="none">None</option>
+                <option value="none" autoFocus >None</option>
                 <option value="des">A-Z</option>
                 <option value="asc">Z-A</option>
             </select>
             </div>
             <div>
-            <label htmlFor="filterHealth" >Order By Health Score:</label>
+            <label htmlFor="filterHealth" >Order By Health Score: </label>
             <select onChange={e => handleOrderByScore(e)}>
-                <option value="none">None</option>
+                <option value="none" autoFocus >None</option>
                 <option value="mayor">Mayor Score</option>
                 <option value="minor">Minor Score</option>
             </select>
