@@ -1,0 +1,15 @@
+.NavBarComplete{
+    margin: 10px 0;
+    list-style: none; 
+    text-align: center;
+}
+
+.paginated ul{
+    list-style: none; 
+    text-align: center;
+}
+
+.number{
+    display: inline-block;
+    margin-right: 10px;
+}
