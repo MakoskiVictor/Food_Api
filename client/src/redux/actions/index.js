@@ -1,6 +1,7 @@
 import { legacy_createStore } from "redux";
 
 export const FETCH_ALL_RECIPES = "FETCH_ALL_RECIPES";
+export const FETCH_DIET = "FETCH_DIET";
 export const FETCH_RECIPE_NAME = "FETCH_RECIPE_NAME";
 export const FETCH_RECIPE_ID = "FETCH_RECIPE_ID";
 export const POST_RECIPE = "POST_RECIPE";
@@ -20,7 +21,7 @@ export function fetchAllRecipes () {
         })
         .catch((error) => {
             console.log(error)
-        })
+        }) 
     }
 };
 
@@ -55,6 +56,22 @@ export function fetchRecipeId(id) {
         })
     }
 };
+
+export function fetchDiets() {
+    return function(dispatch) {
+        fetch(`http://localhost:3001/api/diets`)
+        .then(response => response.json())
+        .then((diet) =>{
+            dispatch({
+                type: FETCH_DIET,
+                payload: diet
+            })
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    }
+}
 
 export function postRecipe(data) {
     return function(dispatch) {
@@ -95,3 +112,4 @@ export function orderByScore(payload) {
         payload
     }
 };
+
