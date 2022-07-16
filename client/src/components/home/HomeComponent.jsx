@@ -5,6 +5,7 @@ import { fetchAllRecipes } from "../../redux/actions/index.js";
 import CardComponent from "../card/CardComponent.jsx"; //AGREGUÉ EL JSX
 import PaginationComponent from "../pagination/PaginationComponent.jsx";
 import FiltersComponent from "../filters/FiltersComponent.jsx";
+import NavBarComponent from "../navBar/NavBarComponent.jsx";
 
 export default function HomeComponent() {
 
@@ -32,6 +33,9 @@ export default function HomeComponent() {
     return(
         <div>
             <h2>HOME</h2>
+            <div>
+                <NavBarComponent/>
+            </div>
             <FiltersComponent state={allRecipes} setOrder={setOrder} setCurrentPage={setCurrentPage} />
             {
                 currentRecipes?.map( (r) => {
