@@ -16,7 +16,6 @@ export default function NavBarComponent () {
     const onInputChange = (e)=> {
         e.preventDefault();
         setSearch(e.target.value)
-        console.log(search)
     }
 
     //DESPACHO LA BUSQUEDA
@@ -24,7 +23,6 @@ export default function NavBarComponent () {
         e.preventDefault();
         dispatch(fetchRecipeName(search))
         setSearch("");
-        console.log("SOY SEARCH", search)
     }
 
 
@@ -35,11 +33,13 @@ export default function NavBarComponent () {
                     <img src={chefImg} alt="Not found" width="50px" height="50px" />
                 </Link>
             </div>
+            <br />
             <div>
-                <Link  to={"/#"}>
+                <Link  to={"/create"}>
                     <div>CREATE RECIPE</div>
                 </Link>
             </div>
+            <br />
             <form onSubmit={onSubmit}>
                 <input type="text" placeholder="Search Recipe" onChange={onInputChange} value={search}/>
                 <input type="submit" value="Search" />
