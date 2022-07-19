@@ -1,5 +1,4 @@
 //IMPORTAMOS LAS ACTIONS
-import { bindActionCreators } from "redux";
 import { FETCH_ALL_RECIPES, FETCH_RECIPE_NAME, FETCH_RECIPE_ID, 
     POST_RECIPE, FILTER_BY_DIET, ORDER_BY_NAME, ORDER_BY_SCORE, FETCH_DIET } from "../actions";
 
