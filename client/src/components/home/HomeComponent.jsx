@@ -26,6 +26,8 @@ export default function HomeComponent() {
         setCurrentPage(pageNumber);
     };
 
+    console.log("SOY EL ESTADO", currentRecipes)
+
     useEffect(()=>{
         dispatch(fetchAllRecipes());
     }, [dispatch])
@@ -42,6 +44,7 @@ export default function HomeComponent() {
                     return( 
                     <CardComponent
                         key={r.id}
+                        id={r.id}
                         name={r.name}
                         image= {r.image}
                         diets= {r.diets}
