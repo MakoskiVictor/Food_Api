@@ -7,33 +7,13 @@ const { API_KEY } = process.env;
 
 
 const router = Router();
+//NUEVO GET RECIPES
 
-//GET ALL RECIPES 
-const getRecipesApi = async ()=> {
+const getAllRecipes = async ()=> {
     try {
-        const getRecipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=2`);
-        const getApi = getRecipes.data.results.map((r) =>(
-            {
-                name: r.title,
-                id: r.id,
-                summary: r.summary.replace(/<[^>]+>/g, ''),
-                healthScore: r.healthScore,
-                steps: r.analyzedInstructions[0]?.steps.map((each)=>{
-                    return each.step
-                }),
-                image: r.image,
-                diets: r.diets
-            }
-        ))
-        return getApi;
-    } catch (error) {
-        console.log("Error in recipeControllers", error)
-    }
-};
+        //RECIPES DB
 
-const getRecipesDb = async () =>{
-    try {
-        const db = await Recipe.findAll({
+        let getRecipeDb = await Recipe.findAll({
             include: {
                 model: Diet,
                 attributtes: ["name"],
@@ -41,42 +21,78 @@ const getRecipesDb = async () =>{
                     attributtes: [],
                 }
             }
-        }) 
-        const findRecipe = db?.map((r)=>{
-            return{
-                id,
-                name,
-                summary,
-                healtScore,
-                steps,
-                image
+        });
+
+
+        let filteredRecipeDb = getRecipeDb.map((r) => {
+            return {
+                id: r.id,
+                name: r.name,
+                summary: r.summary,
+                healthScore: r.healthScore,
+                steps: r.steps,
+                image: r.image
             }
-        })
-        //console.log("SOY findRecipe", findRecipe)
-        return findRecipe;
+        });
+
+        console.log("SOY FILTERED", filteredRecipeDb)
+        //RECIPES API
+        const getRecipesApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=10`);
+        const getApi = getRecipesApi.data.results.map((r) =>(
+            {
+                name: r.title,
+                id: r.id,
+                summary: r.summary.replace(/<[^>]+>/g, ''),
+                healthScore: r.healthScore,
+                steps: r.analyzedInstructions[0]?.steps.map((each)=>{
+                    return each.step
+                }),
+                image: r.image,
+                diets: r.diets
+            }
+        ));
+
+        let allRecipesFounded = [...getApi, ... filteredRecipeDb]
+
+        return allRecipesFounded;
     } catch (error) {
         console.log("Error in recipeControllers", error)
     }
 };
+///////////////////////////////////////////////////////////////////////////////////////
 
-
-const getAllRecipes = async ()=> {
-    try {
-        const getAllApi = await getRecipesApi();
-        const getAllDb = await getRecipesDb();
-        const AllRecipes = getAllApi.concat(getAllDb);
-        return AllRecipes;
-    } catch (error) {
-        console.log("Error in recipeControllers get recipe", error)
-    }
-};
 
 const getRecipeId = async (id) =>{
-    try {
-        const json = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=2`);
-        const recipeId = await json.data.results.filter(r => r.id == id);
+    if(id.includes("-")) {
+        let getRecipeDb = await Recipe.findAll({
+            include: {
+                model: Diet,
+                attributtes: ["name"],
+                through: {
+                    attributtes: [],
+                }
+            }
+        });
 
-        const response = recipeId.map((r) =>(
+
+        let filteredRecipeDb = getRecipeDb.map((r) => {
+            return {
+                id: r.id,
+                name: r.name,
+                summary: r.summary,
+                healthScore: r.healthScore,
+                steps: r.steps,
+                image: r.image
+            }
+        });
+
+        let finalFilter = filteredRecipeDb.filter(r => r.id == id);
+        console.log("SOY FINAL FILTER", finalFilter)
+        return finalFilter;
+    } else {
+        //RECIPES API
+        const getRecipesApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=10`);
+        const getApi = getRecipesApi.data.results.map((r) =>(
             {
                 name: r.title,
                 id: r.id,
@@ -89,21 +105,24 @@ const getRecipeId = async (id) =>{
                 diets: r.diets
             }
         ))
-
-        return response;
-    } catch (error) {
-        console.log("Error in recipeControllers per id", error)
+            finalFilterApi = getApi.filter(r => r.id == id);
+            console.log("SOY FINAL FILTER API", finalFilterApi)
+            return finalFilterApi;
     }
-};
+}
+
+
+
 
 const postRecipe = async (name, summary, healthScore, steps, image, diets)=>{
+
     try {
         const recipeCreated = await Recipe.create({
             name,
             summary,
             healthScore,
             steps,
-            image
+            image: image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTABE23O3ZT5uGShVBbMEMpQM3u2M3f4WldUA&usqp=CAU"
         })
     
         const dietsDb = await Diet.findAll({
