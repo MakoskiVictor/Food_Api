@@ -8,16 +8,17 @@ const router = Router();
 // Configurar los routers
 router.get("/", async (req, res, next)=>{
     const {name} = req.query
+
     try {
-        const getRecipe = await getAllRecipes();
         if(name) {
+            const getRecipe = await getAllRecipes();
             //FILTRA DE TODAS LAS RECETAS, las que tengan el name igual al name del query
             //AMBOS LOS BUSCAMOS EN MINUSCULAS PARA QUE MACHEE
             //EL INCLUDES ME BUSCA TAMBIEN LOS NOMBRES PARECIDOS, POR ESO USAMOS INCLUDES Y NO ===
             const recipeName = await getRecipe.filter(r => r.name.toLowerCase().includes(name.toLowerCase()))
-            console.log("SOY RECIPE NAME", recipeName[0])
             return res.status(200).json(recipeName);
         } else {
+            const getRecipe = await getAllRecipes();
             return res.status(200).json(getRecipe);
         }
     } catch (error) {
@@ -28,10 +29,8 @@ router.get("/", async (req, res, next)=>{
 //GET RECIPE PER ID
 router.get("/:id", async (req, res, next)=>{
     const { id } = req.params;
-
     try {
         const getPerId = await getRecipeId(id);
-        console.log("SOY GETPERID", getPerId)
         res.status(200).json(getPerId);
     } catch (error) {
         next(error);
@@ -43,6 +42,7 @@ router.get("/:id", async (req, res, next)=>{
 
 router.post("/", async (req, res, next)=>{
     const { name, summary, healthScore, steps, image, diets } = req.body;
+
     try {
         const recipeDb = await postRecipe(name, summary, healthScore, steps, image, diets);
         return res.status(201).json(recipeDb);
