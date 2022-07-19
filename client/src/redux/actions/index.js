@@ -1,4 +1,5 @@
-import { legacy_createStore } from "redux";
+import axios from "axios";
+
 
 export const FETCH_ALL_RECIPES = "FETCH_ALL_RECIPES";
 export const FETCH_DIET = "FETCH_DIET";
@@ -73,24 +74,6 @@ export function fetchDiets() {
     }
 }
 
-export function postRecipe(data) {
-    return function(dispatch) {
-        fetch(`http://localhost:3001/api/recipes`, {
-            method: "POST",
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then((response)=>{
-            dispatch({
-                type: POST_RECIPE,
-                payload: response
-            })
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
-    }
-};
 
 export function filterByDiet(payload){
     return{
@@ -113,3 +96,28 @@ export function orderByScore(payload) {
     }
 };
 
+
+export function postRecipe(data) {
+    return function(dispatch) {
+        console.log("soy data", data)
+        fetch(`http://localhost:3001/api/recipes`, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(json => console.log(json))
+        .catch(err => console.log(err));
+    }
+    };
+
+/*     export function postRecipe(data) {
+        return async function(dispatch) {
+            console.log("soy data", data)
+            const response = await axios.post(`http://localhost:3001/api/recipes`, data);
+            console.log("SOY RESPONSE", response)
+            return response;
+        }
+        }; */
