@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../landingPage/LandingPageComponent.css"
 
 export default function LandingPageComponent () { 
     return (
-        <div>
-            <h2>Landing Page</h2>
+        <div className="landingP">
             <Link to="/home">
-                <button>To Home</button>
+                <button className="landingBtn">To Home</button>
             </Link>
         </div>
     )
