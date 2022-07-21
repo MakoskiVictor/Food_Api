@@ -1,0 +1,40 @@
+.home {
+/*     background: url("../../assets/homeBack.jpg"); */
+    background-size: cover;
+    width: 100%;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    margin-top: 2rem;
+}
+
+.ups {
+    margin: 25.00rem;
+    font-size: 300%;
+    color: rgb(255, 255, 255);
+    margin-left: 70rem;
+}
+
+.spinner {
+    border: 20px solid rgba(0, 0, 0, .1);
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    border-left-color: #09f;
+
+    margin: 20rem;
+    margin-left: 60rem;
+
+    animation: spin 1s ease infinite;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -6,6 +6,7 @@ import CardComponent from "../card/CardComponent.jsx"; //AGREGUÉ EL JSX
 import PaginationComponent from "../pagination/PaginationComponent.jsx";
 import FiltersComponent from "../filters/FiltersComponent.jsx";
 import NavBarComponent from "../navBar/NavBarComponent.jsx";
+import "../home/HomeComponent.css"
 
 export default function HomeComponent() {
 
@@ -21,37 +22,42 @@ export default function HomeComponent() {
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage; //INDICE DE LA PRIMERA RECIPE EN LA PAG
     const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe); //RECIPES ACTUALES
 
+
     //SETEAMOS UNA CONSTANTE QUE ME AYUDARA CON EL RENDERIZADO
     const paginated = (pageNumber) =>{
         setCurrentPage(pageNumber);
     };
-
-    console.log("SOY EL ESTADO", currentRecipes)
 
     useEffect(()=>{
         dispatch(fetchAllRecipes());
     }, [dispatch])
 
     return(
-        <div>
-            <h2>HOME</h2>
+        <div className="home">
             <div>
                 <NavBarComponent/>
             </div>
+            
             <FiltersComponent state={allRecipes} setOrder={setOrder} setCurrentPage={setCurrentPage} />
-            {
-                currentRecipes?.map( (r) => {
-                    return( 
-                    <CardComponent
-                        key={r.id}
-                        id={r.id}
-                        name={r.name}
-                        image= {r.image}
-                        diets= {r.diets}
-                        healthScore= {r.healthScore}
-                        />
-                )})
-            }
+            <div>
+                <div className="cards">
+                    {
+                        currentRecipes.length > 0 && currentRecipes? currentRecipes.map( (r) => {
+                            return( 
+                            <CardComponent
+                                key={r.id}
+                                id={r.id}
+                                name={r.name}
+                                image= {r.image}
+                                diets= {r.diets}
+                                healthScore= {r.healthScore}
+                                />
+                        )})
+                        : <div className="spinner"></div>
+                    }
+                </div>
+
+            </div>
             <PaginationComponent
                 allRecipes={allRecipes.length} //.length porque necesito un valor numerico
                 recipesPerPage={recipesPerPage}
