@@ -1,8 +1,9 @@
 import './App.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPageComponent from "./components/landingPage/LandingPageComponent.jsx"
-import HomeComponent from './components/home/HomeComponent';
-import PostRecipeComponent from './components/postRecipe/PostRecipeComponent';
+import HomeComponent from './components/home/HomeComponent.jsx';
+import PostRecipeComponent from './components/postRecipe/PostRecipeComponent.jsx';
+import DetailsComponent from './components/details/DetailsComponent.jsx';
 
 //BUSCAR BROWSER ROUTER
 
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/" component={LandingPageComponent}/>
           <Route path="/home" component={HomeComponent} />
           <Route path="/create" component={PostRecipeComponent} />
+          <Route path="/details/:id" component={DetailsComponent}/>
 
         </Switch>
       </div>
