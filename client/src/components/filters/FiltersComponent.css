@@ -1,0 +1,20 @@
+.filters{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.5rem;
+    background-color: rgb(0, 0, 0);
+    font-size: 100%;
+}
+.filterSelect{
+    margin-left: 0.5rem;
+    height:28px;
+    width:90px;
+    background-color: rgba(49, 13, 13, 1);
+    font: 13px Arial, Helvetica;
+}
+
+.filterLabel{
+    margin-left: 2rem;
+    font: 14px Arial, Helvetica;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { filterByDiet, orderByName, orderByScore } from "../../redux/actions";
+import "../filters/FiltersComponent.css"
 
 export default function FiltersComponent ({setCurrentPage, setOrder}) {
 
@@ -9,13 +10,11 @@ export default function FiltersComponent ({setCurrentPage, setOrder}) {
     function handleFilterByDiets (e) {
         e.preventDefault();
         dispatch(filterByDiet(e.target.value));
-        console.log(e.target.value)
     };
 
     function handleOrderByName(e) {
         e.preventDefault();
         dispatch(orderByName(e.target.value))
-        console.log("SOY ORDERBY", e.target.value)
         setCurrentPage(1); //PARA QUE CUANDO ORDENE, ME SETEE LA PAG EN LA PRIMERA
         setOrder(`OrderBy ${e.target.value}`) //SOLO LO MODIFICO PARA QUE ME RENDERICE EL COMPONENTE
     }
@@ -23,17 +22,16 @@ export default function FiltersComponent ({setCurrentPage, setOrder}) {
     function handleOrderByScore(e){
         e.preventDefault();
         dispatch(orderByScore(e.target.value))
-        console.log("SOY ORDER SCORE", e.target.value)
         setCurrentPage(1); //PARA QUE CUANDO ORDENE, ME SETEE LA PAG EN LA PRIMERA
         setOrder(`OrderBy ${e.target.value}`) //SOLO LO MODIFICO PARA QUE ME RENDERICE EL COMPONENTE
     }
 
 
     return(
-        <div>
+        <div className="filters">
             <div>
-            <label htmlFor="filterName" >Filter By Diet: </label>
-            <select onChange={e => handleFilterByDiets(e)}>
+            <label className="filterLabel" htmlFor="filterName" >Filter By Diet: </label>
+            <select onChange={e => handleFilterByDiets(e)} className="filterSelect">
                 <option value="All" autoFocus >All</option>
                 <option value="gluten free">Gluten free</option>
                 <option value="dairy free">Dairy free</option>
@@ -51,18 +49,18 @@ export default function FiltersComponent ({setCurrentPage, setOrder}) {
             </select>
             </div>
             <div>
-            <label htmlFor="filterName" >Order By Name: </label>
-            <select onChange={e => handleOrderByName(e)}>
+            <label className="filterLabel" htmlFor="filterName" >Order By Name: </label>
+            <select onChange={e => handleOrderByName(e)} className="filterSelect">
                 <option value="none" autoFocus >None</option>
                 <option value="des">A-Z</option>
                 <option value="asc">Z-A</option>
             </select>
             </div>
             <div>
-            <label htmlFor="filterHealth" >Order By Health Score: </label>
-            <select onChange={e => handleOrderByScore(e)}>
+            <label className="filterLabel" htmlFor="filterHealth" >Order By Health Score: </label>
+            <select onChange={e => handleOrderByScore(e)} className="filterSelect">
                 <option value="none" autoFocus >None</option>
-                <option value="mayor">Mayor Score</option>
+                <option value="mayor">Higher Score</option>
                 <option value="minor">Minor Score</option>
             </select>
             </div>
