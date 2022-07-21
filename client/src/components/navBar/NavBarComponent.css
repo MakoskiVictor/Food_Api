@@ -1,15 +1,39 @@
 .NavBarComplete{
-    margin: 10px 0;
-    list-style: none; 
-    text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 6.5rem;
+        background: rgba(0, 0, 0, 0.25);
+        background-color: rgba(49, 13, 13, 1);
+        font: 12px Arial, Helvetica;
 }
 
-.paginated ul{
-    list-style: none; 
-    text-align: center;
+.button {
+    margin: 0.30rem;
+    font-size: 200%;
 }
 
-.number{
-    display: inline-block;
-    margin-right: 10px;
+.link1{
+    text-decoration:none;
+    margin: 0.30rem;
+    font-size: 105%;
+    color: bisque;
 }
+
+.link1:hover {
+    transform: scale(1.025, 1.025);
+    filter: drop-shadow(0 0 12px white);
+}
+
+.logo {
+    border-radius: 2rem;
+    margin-left: 3rem;
+    }
+    .logo:hover {
+    transform: scale(1.025, 1.025);
+    filter: drop-shadow(0 0 12px white);
+    };
+
+
+
+    
