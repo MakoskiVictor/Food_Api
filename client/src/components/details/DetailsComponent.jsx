@@ -2,19 +2,23 @@ import React, { useEffect } from "react";
 import { Link} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchRecipeId } from "../../redux/actions/index.js";
+import { fetchRecipeId, deleteDetails } from "../../redux/actions/index.js";
 import NavBarComponent from "../navBar/NavBarComponent";
 import "../details/DetailsComponent.css"
 
 export default function DetailsComponent (props) {
-    //console.log("SOY PROPS", props);
-    //const { id } = useParams();
+
     const dispatch = useDispatch();
     const detail = useSelector((state) => state.details)
 
     useEffect(() => {
         dispatch(fetchRecipeId(props.match.params.id))
+        dispatch(deleteDetails())
     }, [dispatch]);
+
+/*     const onChange = () => {
+        dispatch(deleteDetails())
+    } */
 
     return(
         <div>

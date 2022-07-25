@@ -1,12 +1,13 @@
 //IMPORTAMOS LAS ACTIONS
 import { FETCH_ALL_RECIPES, FETCH_RECIPE_NAME, FETCH_RECIPE_ID, 
-    POST_RECIPE, FILTER_BY_DIET, ORDER_BY_NAME, ORDER_BY_SCORE, FETCH_DIET } from "../actions";
+    POST_RECIPE, FILTER_BY_DIET, ORDER_BY_NAME, ORDER_BY_SCORE, FETCH_DIET, DELETE_DETAILS } from "../actions";
 
 //SETEAMOS EL/LOS ESTADO/S
 const initialState = {
     allRecipes: [],
+    details: [],
     copyRecipes: [],
-    diets: []
+    diets: [],
 };
 
 export default function reducer (state = initialState, action) {
@@ -27,7 +28,13 @@ export default function reducer (state = initialState, action) {
         case FETCH_RECIPE_ID:
             return {
                 ...state,
-                allRecipes: action.payload
+                details: action.payload
+            }
+
+        case DELETE_DETAILS:
+            return {
+                ...state,
+                details: action.payload
             }
 
         case FETCH_DIET:
@@ -44,8 +51,6 @@ export default function reducer (state = initialState, action) {
         case FILTER_BY_DIET:
             const allDiets = state.copyRecipes;
             const filteredDiets = action.payload === "All" ? allDiets : allDiets.filter(d => d.diets.includes(action.payload));
-            console.log("SOY REDUCER", filteredDiets)
-            console.log("SOY REDUCER", state.allRecipes)
             return {
                 ...state,
                 allRecipes: filteredDiets
@@ -72,7 +77,6 @@ export default function reducer (state = initialState, action) {
             : action.payload === "minor"
             ? state.copyRecipes.sort((a, b)=> a.healthScore - b.healthScore)
             : state.copyRecipes.sort((a, b)=> b.healthScore - a.healthScore);
-            console.log(state.dataRecipes)
             return {
                 ...state,
                 allRecipes: orderScore

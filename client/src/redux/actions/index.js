@@ -1,5 +1,3 @@
-import axios from "axios";
-
 
 export const FETCH_ALL_RECIPES = "FETCH_ALL_RECIPES";
 export const FETCH_DIET = "FETCH_DIET";
@@ -9,6 +7,7 @@ export const POST_RECIPE = "POST_RECIPE";
 export const FILTER_BY_DIET = "FILTER_BY_DIET";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_SCORE = "ORDER_BY_SCORE";
+export const DELETE_DETAILS = "DELETE_DETAILS";
 
 export function fetchAllRecipes () {
     return function(dispatch) {
@@ -96,10 +95,16 @@ export function orderByScore(payload) {
     }
 };
 
+export function deleteDetails() {
+    return {
+        type: DELETE_DETAILS,
+        payload: []
+    }
+}
+
 
 export function postRecipe(data) {
     return function(dispatch) {
-        console.log("soy data", data)
         fetch(`http://localhost:3001/api/recipes`, {
             method: "POST",
             body: JSON.stringify(data),
@@ -113,11 +118,4 @@ export function postRecipe(data) {
     }
     };
 
-/*     export function postRecipe(data) {
-        return async function(dispatch) {
-            console.log("soy data", data)
-            const response = await axios.post(`http://localhost:3001/api/recipes`, data);
-            console.log("SOY RESPONSE", response)
-            return response;
-        }
-        }; */
+

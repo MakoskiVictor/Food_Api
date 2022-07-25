@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllRecipes } from "../../redux/actions/index.js";
-import CardComponent from "../card/CardComponent.jsx"; //AGREGUÉ EL JSX
+import CardComponent from "../card/CardComponent.jsx"; 
 import PaginationComponent from "../pagination/PaginationComponent.jsx";
 import FiltersComponent from "../filters/FiltersComponent.jsx";
 import NavBarComponent from "../navBar/NavBarComponent.jsx";
@@ -10,20 +10,20 @@ import "../home/HomeComponent.css"
 
 export default function HomeComponent() {
 
-    const allRecipes = useSelector((state)=> state.allRecipes); //TRAE EL ESTADO DEL REDUCER
+    const allRecipes = useSelector((state)=> state.allRecipes); 
     const dispatch = useDispatch();
     //UN ORDEN PARA LOS FILTROS
     const [order, setOrder] = useState("");
-    //PARA PAGINADO, SETEAMOS VARIOS ESTADOS LOCALES
-    //UN ESTADO CON LA PAG ACTUAL Y OTRO QUE SETEE LA PAG ACTUAL
-    const [currentPage, setCurrentPage] = useState(1); //INICIA EN LA PAG 1
-    const [recipesPerPage, setRecipesPerPage] = useState(9); //INDICAMOS CUANTAS RECETAS QUEREMOS POR PAG
-    const indexOfLastRecipe = currentPage * recipesPerPage; //ES EL INDICE DE LA ULTIMA RECIPE EN LA PAGINA
-    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage; //INDICE DE LA PRIMERA RECIPE EN LA PAG
-    const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe); //RECIPES ACTUALES
+    
+    //PARA PAGINADO
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [recipesPerPage, setRecipesPerPage] = useState(9); 
+    const indexOfLastRecipe = currentPage * recipesPerPage; 
+    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage; 
+    const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe); 
 
 
-    //SETEAMOS UNA CONSTANTE QUE ME AYUDARA CON EL RENDERIZADO
+    //CONSTANTE QUE AYUDA CON EL RENDERIZADO
     const paginated = (pageNumber) =>{
         setCurrentPage(pageNumber);
     };
@@ -53,13 +53,13 @@ export default function HomeComponent() {
                                 healthScore= {r.healthScore}
                                 />
                         )})
-                        : <div className="spinner"></div>
+                        : <div>UPS! NO ENCONTRAMOS NADA AHI</div>
                     }
                 </div>
 
             </div>
             <PaginationComponent
-                allRecipes={allRecipes.length} //.length porque necesito un valor numerico
+                allRecipes={allRecipes.length} 
                 recipesPerPage={recipesPerPage}
                 paginated={paginated}
             />

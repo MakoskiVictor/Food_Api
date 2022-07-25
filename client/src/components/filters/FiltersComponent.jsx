@@ -15,15 +15,15 @@ export default function FiltersComponent ({setCurrentPage, setOrder}) {
     function handleOrderByName(e) {
         e.preventDefault();
         dispatch(orderByName(e.target.value))
-        setCurrentPage(1); //PARA QUE CUANDO ORDENE, ME SETEE LA PAG EN LA PRIMERA
-        setOrder(`OrderBy ${e.target.value}`) //SOLO LO MODIFICO PARA QUE ME RENDERICE EL COMPONENTE
+        setCurrentPage(1); 
+        setOrder(`OrderBy ${e.target.value}`) 
     }
 
     function handleOrderByScore(e){
         e.preventDefault();
         dispatch(orderByScore(e.target.value))
-        setCurrentPage(1); //PARA QUE CUANDO ORDENE, ME SETEE LA PAG EN LA PRIMERA
-        setOrder(`OrderBy ${e.target.value}`) //SOLO LO MODIFICO PARA QUE ME RENDERICE EL COMPONENTE
+        setCurrentPage(1); 
+        setOrder(`OrderBy ${e.target.value}`) 
     }
 
 

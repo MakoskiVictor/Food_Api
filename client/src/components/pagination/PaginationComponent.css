@@ -14,12 +14,12 @@
 
 .pageButton{
     display: block;
-    padding: 5px 10px;
+    padding: 8px 12px;
     color: #fff;
-    background: #024959;
+    background: rgba(49, 13, 13, 1);
     text-decoration: none;
 }
 
 .pageButton:hover{
-    background: #037E8C;
+    background: rgba(214, 175, 175, 0.473);
 }

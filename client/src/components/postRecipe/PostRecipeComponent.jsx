@@ -4,96 +4,157 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllRecipes, fetchDiets, postRecipe } from "../../redux/actions";
 import NavBarComponent from "../navBar/NavBarComponent.jsx";
+import "../postRecipe/PostRecipeComponent.css"
 
 export default function PostRecipeComponent () {
 
     const diets = useSelector((state)=> state.diets);
     const dispatch = useDispatch();
+    const [errors, setErrors] = useState({});
 
-    //EL USEHISTORY ME MANDA A DONDE YO LE DIGA
+    
     const history = useHistory();
-
-    //PARA QUE ME CARGUE LOS DATOS DE DIETS Y RECIPES SI LA PAG INICIA ACA
+    
     useEffect(()=> {
         dispatch(fetchAllRecipes())
         dispatch(fetchDiets())
     }, [dispatch])
-
+    
     const [input, setInput] = useState({
         name: "",
         summary: "",
-        healthScore: "",
+        healthScore: 0,
         steps: "",
         image: "",
         diets: []
     })
-    console.log(input)
 
-    //PARA MANEJAR TODOS LOS CHANGE MENOS EL CHECKBOX
+
+    //VALIDACIONES
+    let validateName = /^[a-zA-Z\s]+$/;
+    let validateUrl = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/;
+    const validate = (input) => {
+    let errors = {};
+    if (!input.name.length) {
+        errors.name = "This field cannot be empty";
+    }
+    if (!validateName.test(input.name)) {
+        errors.name = "Special characters or numbers are not allowed";
+    }
+    if (input.image && !validateUrl.test(input.image)) {
+        errors.image = "This is not a valid URL";
+    }
+    if (input.image.length > 100) {
+        errors.image = "This URL is too long";
+    }
+    if (!input.summary.length) {
+        errors.summary = "This field cannot be empty";
+    }
+    if (input.summary.length < 40) {
+        errors.summary = "This field must be at least 40 characters";
+    }
+    if (input.healthScore < 1 || input.healthScore > 100) {
+        errors.healthScore = "Number required. Must be a number between 1-100";
+    }
+    if (!input.steps.length) {
+        errors.steps = "This field cannot be empty";
+    }
+    if (input.steps.length < 80) {
+        errors.steps = "This field must be longer than 80 characters";
+    }
+    return errors;
+    };
+
+
+
     const handleChange = (e) => {
         setInput({
             ...input,
             [e.target.name] : e.target.value
-        })
+        });
+        setErrors(
+            validate({
+                ...input,
+                [e.target.name]: e.target.value,
+            })
+        )
     };
-    //ESTE SE FIJA QUE TENGAS EL TARGET CHECKED
+
+
     const handleCheckbox = (e) => {
-        if(e.target.checked) {
+        if(e.target.checked && !input.diets.includes(e.target.value)) {
             setInput({
                 ...input,
                 diets: [...input.diets, e.target.value]
             })
+        } else if (!e.target.checked) {
+            setInput({
+                ...input,
+                diets: input.diets.filter((d) => d !== e.target.value)
+            })
         }
-        console.log("SOY LO QUE ESPERAS", e.target.value)
     };
 
     const onSubmit = (e) => {
         e.preventDefault();
-        dispatch(postRecipe(input))
-        alert("Recipe created");
-        setInput({
-            name: "",
-            summary: "",
-            healthScore: "",
-            steps: "",
-            image: "",
-            diets: []
-        })
-        console.log("SOY LO ENVIADO", input)
-        history.push("/home")
+        if (Object.keys(errors).length === 0 && input.diets.length > 0) {
+            dispatch(postRecipe(input))
+            alert("Recipe created");
+            setInput({
+                name: "",
+                summary: "",
+                healthScore: 0,
+                steps: "",
+                image: "",
+                diets: []
+            })
+            history.push("/home")
+        } else {
+            alert("All fields must be completed");
+        }
     };
 
     return(
         <div>
             <NavBarComponent/>
-            <h3>Create Recipe</h3>
-            <form onSubmit={(e)=>onSubmit(e)}>
+            <h3 className="title">CREATE RECIPE</h3>
+            <form onSubmit={(e)=>onSubmit(e)} className="form">
                 <div>
                     <label>Name: </label>
-                    <input type="text" placeholder="Name" autoComplete="off" name="name" value={input.name} onChange={(e)=> handleChange(e)} />
+                    <input className="input" type="text" placeholder="Name" autoComplete="off" 
+                    name="name" value={input.name} onChange={(e)=> handleChange(e)} />
+                    {errors.name && <p>{errors.name}</p>}
                 </div>
                 <br />
                 <div>
-                    <label htmlFor="summary">Summary: </label>
-                    <input type="text" placeholder="Summary" autoComplete="off" name="summary" value={input.summary} onChange={(e)=> handleChange(e)}/>
+                    <label className="sumSteps" htmlFor="summary">Summary: </label>
+                    <textarea className="textbox" type="text" placeholder="Summary" autoComplete="off" 
+                    name="summary" value={input.summary} onChange={(e)=> handleChange(e)}/>
+                    {errors.summary && <p>{errors.summary}</p>}
                 </div>
                 <br />
                 <div>
                     <label htmlFor="healthScore">Health Score: </label>
-                    <input type="number" placeholder="Ingrese Number" min="1" max="100" name="healthScore" value={input.healthScore} autoComplete="off" onChange={(e)=> handleChange(e)}/>
+                    <input className="inputScore" type="number" placeholder="Ingrese Number" min="1" max="100" 
+                    name="healthScore" value={input.healthScore} autoComplete="off" onChange={(e)=> handleChange(e)}/>
+                    {errors.healthScore && (<p>{errors.healthScore}</p>)}
                 </div>
                 <br />
                 <div>
                     <label htmlFor="image">Image: </label>
-                    <input type="url" placeholder="URL..." autoComplete="off" name="image" value={input.image} onChange={(e)=> handleChange(e)}/>
+                    <input className="input" type="url" placeholder="URL...(Optional)" autoComplete="off" name="image" 
+                    value={input.image} onChange={(e)=> handleChange(e)}/>
+                    {errors.image && <p>{errors.image}</p>}
                 </div>
                 <br />
                 <div>
-                    <label htmlFor="steps">Steps: </label>
-                    <input type="textarea" placeholder="Ingrese steps" autoComplete="off" name="steps" value={input.steps} onChange={(e)=> handleChange(e)}/>
+                    <label className="sumSteps" htmlFor="steps">Steps: </label>
+                    <textarea className="textbox" type="textarea" placeholder="Ingrese steps" autoComplete="off" 
+                    name="steps" value={input.steps} onChange={(e)=> handleChange(e)}/>
+                    {errors.steps && (<p>{errors.steps}</p>)}
                 </div>
                 <br />
-                <div>
+                <div className="checkbox">
                     <label htmlFor="diets">Select Diets</label>
                     <br />
                     <br />
@@ -106,13 +167,13 @@ export default function PostRecipeComponent () {
                 </div>
                 <br />
                 <div>
-                    <button>Create Recipe</button>
+                    <button className="create">Create Recipe</button>
                 </div>
             </form>
             <br />
             <div>
                 <Link to="/home">
-                    <button>CANCEL</button>
+                    <button className="cancel">CANCEL</button>
                 </Link>
             </div>
 
