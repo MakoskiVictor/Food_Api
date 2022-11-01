@@ -35,7 +35,7 @@ export default function HomeComponent() {
     return(
         <div className="home">
             <div>
-                <NavBarComponent/>
+                <NavBarComponent allRecipes={allRecipes}/>
             </div>
             
             <FiltersComponent state={allRecipes} setOrder={setOrder} setCurrentPage={setCurrentPage} />

@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import "./NavBarComponent.css"
 import SearchBarComponent from "../searchBar/SearchBarComponent";
 
-export default function NavBarComponent () {
+export default function NavBarComponent ({allRecipes}) {
+    console.log("soyall recipes nav", allRecipes);
 
     return(
         <div className="NavBarComplete">
@@ -26,7 +27,7 @@ export default function NavBarComponent () {
                 </Link>
             </div>
             <br />
-            <SearchBarComponent/>
+            <SearchBarComponent allRecipes={allRecipes} placeholder={"Search recipe..."}/>
 
 
         </div>
