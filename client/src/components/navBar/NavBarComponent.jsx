@@ -10,8 +10,8 @@ export default function NavBarComponent ({allRecipes}) {
     return(
         <div className="NavBarComplete">
             <div className="logo">
-                <Link to={"/home"} className="link1">
-                    <img src={chefImg} alt="Not found" width="100px" height="100px" />
+                <Link to={"/home"} /* className="link1" */>
+                    <img src={chefImg} alt="Not found" className="image" />
                 </Link>
             </div>
             <br />
