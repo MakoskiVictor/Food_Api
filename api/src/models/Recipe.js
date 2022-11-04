@@ -36,5 +36,9 @@ module.exports = (sequelize) => {
         isUrl: true
       }
     },
+  }, {
+    timestamps: false,
+    createdAt: false, 
+    updatedAt: true,
   });
 };

@@ -31,11 +31,12 @@ const getAllRecipes = async ()=> {
                 summary: r.summary,
                 healthScore: r.healthScore,
                 steps: r.steps,
-                image: r.image
+                image: r.image,
+                /* diets: r.diets */
             }
         });
 
-        console.log("SOY FILTERED", filteredRecipeDb)
+        
         //RECIPES API
         const getRecipesApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=10`);
         const getApi = getRecipesApi.data.results.map((r) =>(
@@ -64,31 +65,18 @@ const getAllRecipes = async ()=> {
 
 const getRecipeId = async (id) =>{
     if(id.includes("-")) {
-        let getRecipeDb = await Recipe.findAll({
+        let getRecipeDb = await Recipe.findByPk(id, {
             include: {
                 model: Diet,
                 attributtes: ["name"],
                 through: {
-                    attributtes: [],
+                    attributtes: ["name"],
                 }
             }
         });
 
-
-        let filteredRecipeDb = getRecipeDb.map((r) => {
-            return {
-                id: r.id,
-                name: r.name,
-                summary: r.summary,
-                healthScore: r.healthScore,
-                steps: r.steps,
-                image: r.image
-            }
-        });
-
-        let finalFilter = filteredRecipeDb.filter(r => r.id == id);
-        console.log("SOY FINAL FILTER", finalFilter)
-        return finalFilter;
+        console.log("getRecipeDb", getRecipeDb)
+        return getRecipeDb;
     } else {
         //RECIPES API
         const getRecipesApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=10`);
@@ -106,8 +94,9 @@ const getRecipeId = async (id) =>{
             }
         ))
             finalFilterApi = getApi.filter(r => r.id == id);
-            console.log("SOY FINAL FILTER API", finalFilterApi)
-            return finalFilterApi;
+            eraseArrayResponse = finalFilterApi[0]
+            console.log("SOY FINAL FILTER API", eraseArrayResponse)
+            return eraseArrayResponse;
     }
 }
 
