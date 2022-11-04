@@ -1,5 +1,7 @@
 .pagination{
-    margin: 10px 0;
+    /* margin: 10px 0; */
+    margin-bottom: 0px;
+    margin-top: 50px;
 }
 
 .paginated ul{
@@ -22,4 +24,6 @@
 
 .pageButton:hover{
     background: rgba(214, 175, 175, 0.473);
+    
 }
+

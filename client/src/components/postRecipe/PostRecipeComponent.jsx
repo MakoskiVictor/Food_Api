@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllRecipes, fetchDiets, postRecipe } from "../../redux/actions";
+import swal from "sweetalert";
 import NavBarComponent from "../navBar/NavBarComponent.jsx";
 import axios from "axios";
 import "../postRecipe/PostRecipeComponent.css";
@@ -34,8 +35,8 @@ export default function PostRecipeComponent() {
     diets: [],
   });
 
-  c(input)
-  c(imageSelected)
+  c(input);
+  c(imageSelected);
 
   //VALIDACIONES
   let validateName = /^[a-zA-Z\s]+$/;
@@ -103,49 +104,73 @@ export default function PostRecipeComponent() {
     e.preventDefault();
     if (Object.keys(errors).length === 0 && input.diets.length > 0) {
       if (imageSelected) {
-          c("entró a cloudinary")
+        c("entró a cloudinary");
         let imgCloudinary;
         const formData = new FormData();
         formData.append("file", imageSelected);
         formData.append("upload_preset", "goctl1il");
 
         try {
-            await axios.post(
-                "https://api.cloudinary.com/v1_1/dzr5xulsx/image/upload",
-                formData
-              )
+          await axios
+            .post(
+              "https://api.cloudinary.com/v1_1/dzr5xulsx/image/upload",
+              formData
+            )
             .then((response) => {
-                imgCloudinary = response.data.secure_url;
+              imgCloudinary = response.data.secure_url;
             })
-            .then( async () => {
-                await axios.post(`http://localhost:3001/api/recipes`, {
-                  name: input.name,
-                  summary: input.summary,
-                  healthScore: input.healthScore,
-                  steps: input.steps,
-                  image: imgCloudinary,
-                  diets: input.diets,
-                });
+            .then(async () => {
+              await axios.post(`http://localhost:3001/api/recipes`, {
+                name: input.name,
+                summary: input.summary,
+                healthScore: input.healthScore,
+                steps: input.steps,
+                image: imgCloudinary,
+                diets: input.diets,
+              });
             })
+            .then(() => {
+              swal({
+                title: "Recipe created succesfully",
+                text: "Do you want to create other one?",
+                icon: "success",
+                buttons: ["No", "Yes"],
+              }).then((response) => {
+                if (response) {
+                  window.location.reload(true);
+                } else {
+                  history.push("/home");
+                }
+              });
+            });
         } catch (error) {
-            console.error(error)
+          console.error(error);
         }
       } else {
-        c("NO entró a cloudinary")
-        dispatch(postRecipe(input));
-        alert("Recipe created");
-        setInput({
-          name: "",
-          summary: "",
-          healthScore: 0,
-          steps: "",
-          image: "",
-          diets: [],
-        });
-        history.push("/home");
+        await axios
+          .post(`http://localhost:3001/api/recipes`, input)
+          .then(() => {
+            swal({
+              title: "Recipe created succesfully",
+              text: "Do you want to create other one?",
+              icon: "success",
+              buttons: ["No", "Yes"],
+            }).then((response) => {
+              if (response) {
+                window.location.reload(true);
+              } else {
+                history.push("/home");
+              }
+            });
+          });
       }
     } else {
-      alert("All fields must be completed");
+      swal({
+        title: "All fields must be completed",
+        icon: "error",
+        buttons: false,
+        timer: 2000,
+      })
     }
   };
 
@@ -155,7 +180,7 @@ export default function PostRecipeComponent() {
       <h3 className="title">CREATE RECIPE</h3>
       <form onSubmit={(e) => onSubmit(e)} className="form">
         <div>
-          <label>Name: {" "}</label>
+          <label>Name: </label>
           <input
             className="input"
             type="text"
@@ -185,7 +210,7 @@ export default function PostRecipeComponent() {
         </div>
         <br />
         <div>
-          <label htmlFor="healthScore">Health Score: {" "}</label>
+          <label htmlFor="healthScore">Health Score: </label>
           <input
             className="inputScore"
             type="number"
@@ -200,12 +225,6 @@ export default function PostRecipeComponent() {
           {errors.healthScore && <p>{errors.healthScore}</p>}
         </div>
         <br />
-        {/* <div>
-                    <label htmlFor="image">Image: </label>
-                    <input className="input" type="url" placeholder="URL...(Optional)" autoComplete="off" name="image" 
-                    value={input.image} onChange={(e)=> handleChange(e)}/>
-                    {errors.image && <p>{errors.image}</p>}
-                </div> */}
         <div className="inputsContainerImg">
           <label className="labelImg">Image (Optional): </label>
           <input
@@ -233,7 +252,7 @@ export default function PostRecipeComponent() {
         </div>
         <br />
         <div className="checkbox">
-          <label htmlFor="diets">Select Diets {" "}</label>
+          <label htmlFor="diets">Select Diets </label>
           <br />
           <br />
           {diets.map((d) => (

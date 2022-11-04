@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import "./NavBarComponent.css"
 import SearchBarComponent from "../searchBar/SearchBarComponent";
 
-export default function NavBarComponent ({allRecipes}) {
-    console.log("soyall recipes nav", allRecipes);
+export default function NavBarComponent () {
+
 
     return(
         <div className="NavBarComplete">
             <div className="logo">
-                <Link to={"/home"} /* className="link1" */>
+                <Link to={"/home"}>
                     <img src={chefImg} alt="Not found" className="image" />
                 </Link>
             </div>
@@ -27,7 +27,7 @@ export default function NavBarComponent ({allRecipes}) {
                 </Link>
             </div>
             <br />
-            <SearchBarComponent allRecipes={allRecipes} placeholder={"Search recipe..."}/>
+            <SearchBarComponent placeholder={"Search recipe..."}/>
 
 
         </div>

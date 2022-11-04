@@ -1,12 +1,17 @@
 .home {
 /*     background: url("../../assets/homeBack.jpg"); */
-    background-size: cover;
+    /* background-size: cover; */
     width: 100%;
+    background-color: #333;
+    height: 200%;
+    margin-bottom: 0px;
+    position: relative;
+    
 }
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 0.5fr);
     grid-gap: 1rem;
     margin-top: 2rem;
 }

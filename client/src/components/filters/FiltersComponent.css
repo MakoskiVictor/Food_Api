@@ -12,9 +12,11 @@
     width:90px;
     background-color: rgba(49, 13, 13, 1);
     font: 13px Arial, Helvetica;
+    color: bisque;
 }
 
 .filterLabel{
     margin-left: 2rem;
     font: 14px Arial, Helvetica;
+    color: bisque;
 }

@@ -17,7 +17,7 @@ export default function HomeComponent() {
     
     //PARA PAGINADO
     const [currentPage, setCurrentPage] = useState(1); 
-    const [recipesPerPage, setRecipesPerPage] = useState(9); 
+    const [recipesPerPage, setRecipesPerPage] = useState(12); 
     const indexOfLastRecipe = currentPage * recipesPerPage; 
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage; 
     const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe); 
@@ -63,6 +63,9 @@ export default function HomeComponent() {
                 recipesPerPage={recipesPerPage}
                 paginated={paginated}
             />
+            <br />
+
+            <div className="espacio"></div>
         </div>
     )
 }
