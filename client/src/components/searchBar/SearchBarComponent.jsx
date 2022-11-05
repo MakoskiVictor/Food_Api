@@ -27,7 +27,7 @@ export default function SearchBarComponent ({placeholder}) {
     return(
         <form className="search" onSubmit={onSubmit}>
         <div className="searchInputs">
-            <input type="text" placeholder={placeholder} onChange={onInputChange}  value={search} id="search"></input>
+            <input type="text" autoComplete="off" placeholder={placeholder} onChange={onInputChange}  value={search} id="search"></input>
             <div className="searchIcon"  type="submit"><SearchIcon/></div>
         </div>
     </form>

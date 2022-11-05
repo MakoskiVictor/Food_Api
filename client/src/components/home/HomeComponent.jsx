@@ -42,10 +42,10 @@ export default function HomeComponent() {
             <div>
                 <div className="cards">
                     {
-                        currentRecipes.length > 0 && currentRecipes? currentRecipes.map( (r) => {
+                        currentRecipes.length > 0 && currentRecipes? currentRecipes.map( (r, i) => {
                             return( 
                             <CardComponent
-                                key={r.id}
+                                key={i}
                                 id={r.id}
                                 name={r.name}
                                 image= {r.image}
@@ -53,7 +53,9 @@ export default function HomeComponent() {
                                 healthScore= {r.healthScore}
                                 />
                         )})
-                        : <div>UPS! NO ENCONTRAMOS NADA AHI</div>
+                        : <div className="spinnerContainer"><div className="spinner"></div>
+                        <p className="SpinnerText">Ups, seems like nothing is here!</p>
+                        </div> 
                     }
                 </div>
 

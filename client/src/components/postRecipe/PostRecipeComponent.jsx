@@ -49,12 +49,6 @@ export default function PostRecipeComponent() {
     if (!validateName.test(input.name)) {
       errors.name = "Special characters or numbers are not allowed";
     }
-    /* if (input.image && !validateUrl.test(input.image)) {
-      errors.image = "This is not a valid URL";
-    }
-    if (input.image.length > 100) {
-      errors.image = "This URL is too long";
-    } */
     if (!input.summary.length) {
       errors.summary = "This field cannot be empty";
     }
@@ -175,30 +169,30 @@ export default function PostRecipeComponent() {
   };
 
   return (
-    <div>
+    <div className="postRecipe">
       <NavBarComponent />
       <h3 className="title">CREATE RECIPE</h3>
       <form onSubmit={(e) => onSubmit(e)} className="form">
-        <div>
-          <label>Name: </label>
+        <div className="container">
+          <label className="labelInp">Name: </label>
           <input
-            className="input"
+            className="inputSmol"
             type="text"
-            placeholder="Name"
             autoComplete="off"
             name="name"
             value={input.name}
             onChange={(e) => handleChange(e)}
           />
-          {errors.name && <p>{errors.name}</p>}
+          
         </div>
-        <br />
-        <div>
-          <label className="sumSteps" htmlFor="summary">
+        {errors.name? <p className="error">{errors.name}</p> : <p className="error"></p>}
+        <div className="container">
+          <label className="labelInp" htmlFor="summary">
             Summary:{" "}
           </label>
           <textarea
-            className="textbox"
+          className="input"
+            /* className="textbox" */
             type="text"
             placeholder="Summary"
             autoComplete="off"
@@ -206,15 +200,14 @@ export default function PostRecipeComponent() {
             value={input.summary}
             onChange={(e) => handleChange(e)}
           />
-          {errors.summary && <p>{errors.summary}</p>}
+          
         </div>
-        <br />
-        <div>
-          <label htmlFor="healthScore">Health Score: </label>
+        {errors.summary? <p className="error">{errors.summary}</p> : <p className="error"></p>}
+        <div className="container">
+          <label htmlFor="labelInp" className="labelInp">Health Score: </label>
           <input
-            className="inputScore"
+            className="inputSmol"
             type="number"
-            placeholder="Ingrese Number"
             min="1"
             max="100"
             name="healthScore"
@@ -222,39 +215,38 @@ export default function PostRecipeComponent() {
             autoComplete="off"
             onChange={(e) => handleChange(e)}
           />
-          {errors.healthScore && <p>{errors.healthScore}</p>}
+          
         </div>
-        <br />
-        <div className="inputsContainerImg">
-          <label className="labelImg">Image (Optional): </label>
+        {errors.healthScore? <p className="error">{errors.healthScore}</p> : <p className="error"></p>}
+        <div className="container">
+          <label className="labelInp">Image (Optional): </label>
           <input
+          className="inputSmolImage"
             type="file"
             onChange={(e) => {
               setImageSelected(e.target.files[0]);
             }}
           />
         </div>
-        <br />
-        <div>
-          <label className="sumSteps" htmlFor="steps">
+        <div className="container">
+          <label className="labelInp" htmlFor="steps">
             Steps:{" "}
           </label>
           <textarea
-            className="textbox"
-            type="textarea"
+            /* className="textbox" */
+            className="input"
+            type="textarea" 
             placeholder="Ingrese steps"
             autoComplete="off"
             name="steps"
             value={input.steps}
             onChange={(e) => handleChange(e)}
           />
-          {errors.steps && <p>{errors.steps}</p>}
+          
         </div>
-        <br />
+        {errors.steps? <p className="error">{errors.steps}</p> : <p className="error"></p>}
         <div className="checkbox">
-          <label htmlFor="diets">Select Diets </label>
-          <br />
-          <br />
+          <label htmlFor="diets">Select Diets: </label>
           {diets.map((d) => (
             <label htmlFor={d.name} key={d.name}>
               <input
@@ -267,7 +259,6 @@ export default function PostRecipeComponent() {
             </label>
           ))}
         </div>
-        <br />
         <div>
           <button className="create">Create Recipe</button>
         </div>

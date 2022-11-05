@@ -23,15 +23,27 @@
     margin-left: 70rem;
 }
 
+
+
+.SpinnerText{
+    color: bisque;
+    margin-left: 790px;
+    margin-top: 50px;
+    margin-bottom: 300px;
+
+}
+
 .spinner {
     border: 20px solid rgba(0, 0, 0, .1);
-    width: 360px;
-    height: 360px;
+    width: 260px;
+    height: 260px;
     border-radius: 50%;
     border-left-color: #09f;
 
-    margin: 20rem;
-    margin-left: 60rem;
+    margin: 200px 0px 0px 780px;
+    
+
+    
 
     animation: spin 1s ease infinite;
 }

@@ -1,3 +1,4 @@
+import {BACK_URL} from "../../constantes.js";
 
 export const FETCH_ALL_RECIPES = "FETCH_ALL_RECIPES";
 export const FETCH_DIET = "FETCH_DIET";
@@ -8,10 +9,11 @@ export const FILTER_BY_DIET = "FILTER_BY_DIET";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_SCORE = "ORDER_BY_SCORE";
 export const DELETE_DETAILS = "DELETE_DETAILS";
+console.log("soy backurl", BACK_URL)
 
 export function fetchAllRecipes () {
     return function(dispatch) {
-        fetch(`http://localhost:3001/api/recipes`)
+        fetch(`${BACK_URL}/api/recipes`)
         .then(response => response.json())
         .then((recipes)=>{
             dispatch({
@@ -27,7 +29,7 @@ export function fetchAllRecipes () {
 
 export function fetchRecipeName(name) {
     return function(dispatch){
-        fetch(`http://localhost:3001/api/recipes?name=${name}`)
+        fetch(`${BACK_URL}/api/recipes?name=${name}`)
         .then(response => response.json())
         .then((recipe) => {
             dispatch({
@@ -43,7 +45,7 @@ export function fetchRecipeName(name) {
 
 export function fetchRecipeId(id) {
     return function(dispatch) {
-        fetch(`http://localhost:3001/api/recipes/${id}`)
+        fetch(`${BACK_URL}/api/recipes/${id}`)
         .then(response => response.json())
         .then((recipe) =>{
             dispatch({
@@ -59,7 +61,7 @@ export function fetchRecipeId(id) {
 
 export function fetchDiets() {
     return function(dispatch) {
-        fetch(`http://localhost:3001/api/diets`)
+        fetch(`${BACK_URL}/api/diets`)
         .then(response => response.json())
         .then((diet) =>{
             dispatch({
@@ -105,7 +107,7 @@ export function deleteDetails() {
 
 export function postRecipe(data) {
     return function(dispatch) {
-        fetch(`http://localhost:3001/api/recipes`, {
+        fetch(`${BACK_URL}/api/recipes`, {
             method: "POST",
             body: JSON.stringify(data),
             headers:{

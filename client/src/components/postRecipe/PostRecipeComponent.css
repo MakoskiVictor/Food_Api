@@ -1,44 +1,62 @@
+.postRecipe {
+    background-color: #333;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-style: italic;
+}
 .title{
     margin: 4rem;
-    font: 12px Arial, Helvetica;
-    font-size: 300%
+    font: 10px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* font-style: italic; */
+    font-size: 230%;
+    color: bisque;
 }
 
-/* .sumSteps{
-    text-align: left;
-    width: 0%;
-    padding: auto;
-    margin-right: 25rem;
-    margin-top: 25rem;
-} */
-/* label{
-    display: inline-block;
-    width: 80px;
-} */
+.container {
+    margin-top: 30px;
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
 
-label.sumSteps{
-    text-align: left;
+.error{
+    color: yellow;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    height: 15px;
+    vertical-align: middle;
+}
+
+
+
+.labelInp{
+    margin-right: 10px;
+    align-self: center;
 }
 
 .cancel{
-    font: 12px Arial, Helvetica;
+    /* font: 12px; */
     font-size: 170%;
     background-color: rgb(141, 63, 63);
+    margin-bottom: 20px;
+    margin-right: 5px;
 }
 .cancel:hover{
     transform: scale(1.025, 1.025);
-    filter: drop-shadow(0 0 12px white);
+    filter: drop-shadow(0 0 5px white);
 }
 
 .create{
-    font: 12px Arial, Helvetica;
+    /* font: 12px Arial, Helvetica; */
     font-size: 130%;
     background-color: rgb(141, 63, 63);
     margin-bottom: 1rem;
+    margin-top: 9px;
 }
 .create:hover{
     transform: scale(1.025, 1.025);
-    filter: drop-shadow(0 0 12px white);
+    filter: drop-shadow(0 0 5px white);
 }
 
 .form {
@@ -49,33 +67,45 @@ label.sumSteps{
     border: 1px solid rgb(0, 0, 0);
     border-radius: 2rem;
     margin: 4rem auto;
-    padding-top: 5rem;
+    padding-top: 1rem;
     width: 45rem;
-    color: rgba(49, 13, 13, 1);
-    box-shadow: 0px 0px 18px rgba(209, 200, 200, 0.5);
+    color: bisque;
+    box-shadow: 0px 0px 8px rgba(209, 200, 200, 0.5);
     backdrop-filter: blur(3rem);
     background: linear-gradient(
-    150deg,
-    rgb(255, 254, 254) 10%,
-    rgba(49, 13, 13, 1) 110%
-    );
+        150deg,
+        rgb(109, 79, 79) 5%,
+        rgba(49, 13, 13, 1) 95%
+        );
 }
-.display {
-    display: grid;
-    grid-template-columns: 8rem 20rem;
-    grid-template-rows: 3rem 3rem;
+
+textarea {
+    resize: none;
+  }
+
+.inputSmol{
+    height: 20px;
+    width: 300px;
+    align-self: center;
+    border: 2px;
+    border-radius: 2px;
+    background: bisque;
+}
+
+.inputSmolImage{
+    height: 20px;
+    width: 300px;
+    align-self: center;
+    background: transparent;
 }
 
 .input {
-    background-color: rgba(226, 173, 124, 0.301);
-    border: 2px solid rgba(49, 13, 13, 1);
-    border-radius: 10px;
-    width: 20rem;
-    height: 2.5rem;
-    margin: 0.5rem 0 2rem 0;
-    color: bisque;
-    padding-left: 0.5rem;
-    margin-left: 1rem;
+    height: 45px;
+    width: 300px;
+    align-self: flex-end;
+    border: 2px;
+    border-radius: 2px;
+    background: bisque;
 }
 .input::placeholder {
     color: rgba(250, 235, 215, 0.562);
@@ -117,3 +147,15 @@ label.sumSteps{
 }
 
 
+@media screen and (max-width: 1366px) {
+    .cancel{
+        
+        font-size: 170%;
+        background-color: rgb(141, 63, 63);
+        margin-bottom: 20px;
+    }
+    .cancel:hover{
+        transform: scale(1.025, 1.025);
+        filter: drop-shadow(0 0 5px white);
+    }
+}

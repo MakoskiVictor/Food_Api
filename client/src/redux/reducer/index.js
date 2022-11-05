@@ -49,6 +49,7 @@ export default function reducer (state = initialState, action) {
             }
 
         case FILTER_BY_DIET:
+
             const allDiets = state.copyRecipes;
             const filteredDiets = action.payload === "All" ? allDiets : allDiets.filter(d => d.diets.includes(action.payload));
             return {
@@ -60,10 +61,10 @@ export default function reducer (state = initialState, action) {
             const orderName = action.payload === "none"
             ? state.copyRecipes
             : action.payload === "asc"
-            ? state.copyRecipes.sort((a, b) => {
+            ? state.allRecipes.sort((a, b) => {
                 return b.name.toLowerCase().localeCompare(a.name.toLowerCase());
             })
-            : state.copyRecipes.sort((a, b) => {
+            : state.allRecipes.sort((a, b) => {
                 return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
             });
             return {
@@ -75,8 +76,8 @@ export default function reducer (state = initialState, action) {
             const orderScore = action.payload === "none"
             ? state.copyRecipes
             : action.payload === "minor"
-            ? state.copyRecipes.sort((a, b)=> a.healthScore - b.healthScore)
-            : state.copyRecipes.sort((a, b)=> b.healthScore - a.healthScore);
+            ? state.allRecipes.sort((a, b)=> a.healthScore - b.healthScore)
+            : state.allRecipes.sort((a, b)=> b.healthScore - a.healthScore);
             return {
                 ...state,
                 allRecipes: orderScore
