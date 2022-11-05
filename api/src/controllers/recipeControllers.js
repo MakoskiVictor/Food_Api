@@ -12,14 +12,14 @@ const router = Router();
 const getAllRecipes = async ()=> {
     try {
         //RECIPES DB
-
+ 
         let getRecipeDb = await Recipe.findAll({
             include: {
                 model: Diet,
                 attributtes: ["name"],
-                through: {
+                /* through: {
                     attributtes: [],
-                }
+                } */
             }
         });
 
@@ -32,10 +32,9 @@ const getAllRecipes = async ()=> {
                 healthScore: r.healthScore,
                 steps: r.steps,
                 image: r.image,
-                /* diets: r.diets */
+                diets: r.diets.map((d) => d.name)
             }
         });
-
         
         //RECIPES API
         const getRecipesApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=10`);
@@ -75,7 +74,7 @@ const getRecipeId = async (id) =>{
             }
         });
 
-        console.log("getRecipeDb", getRecipeDb)
+
         return getRecipeDb;
     } else {
         //RECIPES API
@@ -95,7 +94,6 @@ const getRecipeId = async (id) =>{
         ))
             finalFilterApi = getApi.filter(r => r.id == id);
             eraseArrayResponse = finalFilterApi[0]
-            console.log("SOY FINAL FILTER API", eraseArrayResponse)
             return eraseArrayResponse;
     }
 }
@@ -104,6 +102,8 @@ const getRecipeId = async (id) =>{
 
 
 const postRecipe = async (name, summary, healthScore, steps, image, diets)=>{
+
+    console.log("ESTOY EN POST RECIPE", name, summary, healthScore, steps, image, diets)
 
     try {
         const recipeCreated = await Recipe.create({
