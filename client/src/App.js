@@ -4,6 +4,7 @@ import LandingPageComponent from "./components/landingPage/LandingPageComponent.
 import HomeComponent from './components/home/HomeComponent.jsx';
 import PostRecipeComponent from './components/postRecipe/PostRecipeComponent.jsx';
 import DetailsComponent from './components/details/DetailsComponent.jsx';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 //BUSCAR BROWSER ROUTER
 
@@ -16,7 +17,7 @@ function App() {
           <Route path="/home" component={HomeComponent} />
           <Route path="/create" component={PostRecipeComponent} />
           <Route path="/details/:id" component={DetailsComponent}/>
-
+          <Route component={ErrorPage}></Route>
         </Switch>
       </div>
     </BrowserRouter>

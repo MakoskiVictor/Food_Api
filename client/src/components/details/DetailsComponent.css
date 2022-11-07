@@ -22,7 +22,6 @@
     margin-top: 4rem;
     text-shadow: 0 0 0.3rem rgba(209, 156, 106, 0.842);
     text-transform: capitalize;
-    /* font: 12px Arial, Helvetica; */
     font-size: 200%;
 }
 
@@ -35,15 +34,15 @@
 .summaryDet {
     padding: 0 1rem;
     text-align: justify;
-    /* font: 12px Arial, Helvetica; */
 }
 
 .dietsDet {
-    margin: 0 3rem;
+    margin-top: 5px;
+    /* margin: 0 3rem; */
     text-transform: capitalize;
     display: flex;
     justify-content: space-evenly;
-    /* font: 12px Arial, Helvetica; */
+
     text-decoration:none;
     font-size: 120%;
     display: inline-block;
@@ -53,7 +52,6 @@
     padding: 0 1rem;
     text-align: justify;
     margin: 0 3rem;
-    /* font: 12px Arial, Helvetica; */
 }
 
 
